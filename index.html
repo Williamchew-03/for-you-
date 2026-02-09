@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Would you be my Valentine?</title>
+
+<style>
+  body{
+    height:100vh;margin:0;overflow:hidden;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    font-family:"Comic Sans MS", cursive, sans-serif;
+    background: radial-gradient(circle at top, #ff9a9e, #fad0c4);
+  }
+  h1{
+    color:#fff;text-align:center;margin:0 0 18px 0;
+    text-shadow:2px 2px 8px rgba(0,0,0,.25);
+  }
+
+  .photo{
+    width:220px;height:220px;border-radius:50%;
+    overflow:hidden;border:6px solid #fff;
+    box-shadow:0 0 20px rgba(255,255,255,.8);
+    margin-bottom:26px;background:rgba(255,255,255,.25);
+    display:flex;align-items:center;justify-content:center;
+  }
+  .photo img{width:100%;height:100%;object-fit:cover;}
+
+  .buttons{position:relative;width:420px;height:200px;}
+  button{
+    position:absolute;padding:15px 36px;font-size:26px;
+    border:none;border-radius:40px;cursor:pointer;
+    transition:transform .25s ease;
+  }
+  .yes-button{
+    left:50%;transform:translateX(-50%);
+    background:#ff4d6d;color:#fff;
+  }
+  .no-button{
+    left:65%;top:90px;background:#666;color:#fff;
+  }
+
+  .result{
+    display:none;margin-top:26px;
+    color:#fff;font-size:34px;text-align:center;
+    animation:pop .9s ease;
+    text-shadow:2px 2px 10px rgba(0,0,0,.2);
+  }
+  @keyframes pop{0%{transform:scale(.45);opacity:0}100%{transform:scale(1);opacity:1}}
+
+  .heart{
+    position:fixed;bottom:-20px;font-size:24px;
+    animation:floatUp 6s linear infinite;
+    pointer-events:none;
+  }
+  @keyframes floatUp{
+    0%{transform:translateY(0);opacity:1}
+    100%{transform:translateY(-100vh);opacity:0}
+  }
+</style>
+</head>
+
+<body>
+  <h1>Would you be my Valentine? 💖</h1>
+
+  <div class="photo">
+    <!-- 把照片文件名固定成 her.jpg -->
+    <img src="her.jpg" alt="Her Photo" />
+  </div>
+
+  <div class="buttons">
+    <button class="yes-button" onclick="sayYes()">Yes</button>
+    <button class="no-button" id="noBtn">No</button>
+  </div>
+
+  <div class="result" id="result">
+    💕 I knew you would say yes 💕<br/>
+    See you on Feb 14th ❤️
+  </div>
+
+<script>
+  let yesScale = 1;
+
+  const noBtn = document.getElementById("noBtn");
+  // 电脑鼠标靠近
+  noBtn.addEventListener("mouseover", runAway);
+  // 手机触控也能跑
+  noBtn.addEventListener("touchstart", (e) => { e.preventDefault(); runAway(); }, {passive:false});
+
+  function runAway(){
+    const yesBtn = document.querySelector(".yes-button");
+
+    // 随机位置（限制在按钮区域）
+    const x = Math.random() * 320;
+    const y = Math.random() * 140;
+    noBtn.style.left = x + "px";
+    noBtn.style.top  = y + "px";
+
+    // Yes 慢慢变大
+    yesScale += 0.12;
+    yesBtn.style.transform = `translateX(-50%) scale(${yesScale})`;
+  }
+
+  function sayYes(){
+    document.querySelector(".buttons").style.display = "none";
+    document.getElementById("result").style.display = "block";
+    for(let i=0;i<35;i++) createHeart();
+  }
+
+  function createHeart(){
+    const heart = document.createElement("div");
+    heart.className = "heart";
+    heart.textContent = "❤️";
+    heart.style.left = Math.random()*100 + "vw";
+    heart.style.animationDuration = (3 + Math.random()*3) + "s";
+    document.body.appendChild(heart);
+    setTimeout(()=>heart.remove(), 6500);
+  }
+</script>
+</body>
+</html>
