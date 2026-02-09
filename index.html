@@ -72,7 +72,7 @@
 
   <div class="photo">
     <!-- 把照片文件名固定成 her.jpg -->
-    <img src="her.jpg.jpeg" alt="Her Photo" />
+    <img id="mainPhoto" src="her.jpg.jpeg" alt="Her Photo" />
   </div>
 
   <div class="buttons">
@@ -109,6 +109,8 @@
   }
 
   function sayYes(){
+    // ✅ 按 Yes 后换另一张照片（你要先上传这个文件）
+    document.getElementById("mainPhoto").src = "her_yes.jpeg";
     document.querySelector(".buttons").style.display = "none";
     document.getElementById("result").style.display = "block";
     for(let i=0;i<35;i++) createHeart();
